@@ -38,3 +38,27 @@ export const protect = async (req, res, next) => {
     next(error);
   }
 };
+
+export const optionalProtect = async (req, res, next) => {
+  try {
+    let token = null;
+    if (req.cookies && req.cookies[COOKIE_NAME]) {
+      token = req.cookies[COOKIE_NAME];
+    } else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return next();
+    }
+
+    const decoded = verifyToken(token);
+    const user = await User.findById(decoded.id);
+    if (user) {
+      req.user = user;
+    }
+    next();
+  } catch {
+    next();
+  }
+};

@@ -6,6 +6,8 @@ import { env } from './config/env.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import propertyRoutes from './routes/propertyRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
@@ -53,6 +55,12 @@ app.use('/api', healthRoutes);
 
 // Authentication routes
 app.use('/api/auth', authRoutes);
+
+// Property routes
+app.use('/api/properties', propertyRoutes);
+
+// Admin routes
+app.use('/api/admin', adminRoutes);
 
 // Placeholder for remaining routes (will be mounted in upcoming stages)
 app.get('/api', (req, res) => {
