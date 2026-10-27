@@ -228,60 +228,71 @@ export const seedDatabase = async () => {
     }
 
     console.log('[Seed] Ensuring Admin user exists...');
-    const adminEmail = env.ADMIN_EMAIL.toLowerCase();
-    let admin = await User.findOne({ email: adminEmail });
-
-    if (!admin) {
-      const passwordHash = await User.hashPassword(env.ADMIN_PASSWORD);
-      admin = await User.create({
-        name: 'System Administrator',
-        email: adminEmail,
-        passwordHash,
-        role: 'admin',
-        phone: '+91 9876543210'
-      });
-      console.log(`[Seed] Created Admin user: ${adminEmail}`);
-    } else {
-      admin.passwordHash = await User.hashPassword(env.ADMIN_PASSWORD);
-      admin.role = 'admin';
-      await admin.save();
-      console.log(`[Seed] Synchronized Admin password for: ${adminEmail}`);
+    const adminEmails = Array.from(new Set([env.ADMIN_EMAIL.toLowerCase(), 'admin@estatesquare.com', 'admin@propertyhub.com']));
+    let admin = null;
+    for (const email of adminEmails) {
+      let u = await User.findOne({ email });
+      if (!u) {
+        const passwordHash = await User.hashPassword(env.ADMIN_PASSWORD);
+        u = await User.create({
+          name: 'System Administrator',
+          email,
+          passwordHash,
+          role: 'admin',
+          phone: '+91 9876543210'
+        });
+        console.log(`[Seed] Created Admin user: ${email}`);
+      } else {
+        u.passwordHash = await User.hashPassword(env.ADMIN_PASSWORD);
+        u.role = 'admin';
+        await u.save();
+        console.log(`[Seed] Synchronized Admin password for: ${email}`);
+      }
+      if (!admin) admin = u;
     }
 
     // Ensure sample seller exists
-    const sellerEmail = 'seller@propertyhub.com';
-    let seller = await User.findOne({ email: sellerEmail });
-    if (!seller) {
-      const sellerHash = await User.hashPassword('Seller123!');
-      seller = await User.create({
-        name: 'Rajesh Sharma (Verified Seller)',
-        email: sellerEmail,
-        passwordHash: sellerHash,
-        role: 'seller',
-        phone: '+91 9845012345'
-      });
-      console.log(`[Seed] Created Sample Seller: ${sellerEmail}`);
-    } else {
-      seller.passwordHash = await User.hashPassword('Seller123!');
-      await seller.save();
+    const sellerEmails = ['seller@estatesquare.com', 'seller@propertyhub.com'];
+    let seller = null;
+    for (const email of sellerEmails) {
+      let s = await User.findOne({ email });
+      if (!s) {
+        const sellerHash = await User.hashPassword('Seller123!');
+        s = await User.create({
+          name: 'Rajesh Sharma (Verified Seller)',
+          email,
+          passwordHash: sellerHash,
+          role: 'seller',
+          phone: '+91 9845012345'
+        });
+        console.log(`[Seed] Created Sample Seller: ${email}`);
+      } else {
+        s.passwordHash = await User.hashPassword('Seller123!');
+        await s.save();
+      }
+      if (!seller) seller = s;
     }
 
     // Ensure sample buyer exists
-    const buyerEmail = 'buyer@propertyhub.com';
-    let buyer = await User.findOne({ email: buyerEmail });
-    if (!buyer) {
-      const buyerHash = await User.hashPassword('Buyer123!');
-      buyer = await User.create({
-        name: 'Priya Patel (Home Buyer)',
-        email: buyerEmail,
-        passwordHash: buyerHash,
-        role: 'buyer',
-        phone: '+91 9820054321'
-      });
-      console.log(`[Seed] Created Sample Buyer: ${buyerEmail}`);
-    } else {
-      buyer.passwordHash = await User.hashPassword('Buyer123!');
-      await buyer.save();
+    const buyerEmails = ['buyer@estatesquare.com', 'buyer@propertyhub.com'];
+    let buyer = null;
+    for (const email of buyerEmails) {
+      let b = await User.findOne({ email });
+      if (!b) {
+        const buyerHash = await User.hashPassword('Buyer123!');
+        b = await User.create({
+          name: 'Priya Patel (Home Buyer)',
+          email,
+          passwordHash: buyerHash,
+          role: 'buyer',
+          phone: '+91 9820054321'
+        });
+        console.log(`[Seed] Created Sample Buyer: ${email}`);
+      } else {
+        b.passwordHash = await User.hashPassword('Buyer123!');
+        await b.save();
+      }
+      if (!buyer) buyer = b;
     }
 
     // Seed Properties if not already present

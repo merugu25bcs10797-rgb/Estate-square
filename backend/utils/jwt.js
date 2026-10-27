@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 
-export const COOKIE_NAME = 'propertyhub_token';
+export const COOKIE_NAME = 'estatesquare_token';
 
 export const getCookieOptions = () => {
   const isSecure = env.isProd && process.env.COOKIE_SECURE !== 'false';
@@ -52,4 +52,5 @@ export const sendTokenResponse = (user, statusCode, res, message = 'Success') =>
 export const clearTokenResponse = (res) => {
   const { maxAge, ...clearOptions } = getCookieOptions();
   res.clearCookie(COOKIE_NAME, clearOptions);
+  res.clearCookie('propertyhub_token', clearOptions);
 };

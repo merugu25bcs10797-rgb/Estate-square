@@ -36,14 +36,14 @@ if (isProd && (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API
 
 export const env = {
   PORT: parseInt(process.env.PORT || '8084', 10),
-  dbURL: process.env.dbURL || 'mongodb://127.0.0.1:27017/propertyhub',
-  JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret_propertyhub_key_min32chars',
+  dbURL: process.env.dbURL || 'mongodb://127.0.0.1:27017/estatesquare',
+  JWT_SECRET: process.env.JWT_SECRET || 'dev_jwt_secret_estatesquare_key_min32chars',
   CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:5173',
   NODE_ENV: process.env.NODE_ENV || 'development',
   isProd,
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
-  ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'admin@propertyhub.com',
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'admin@estatesquare.com',
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'AdminPassword123!'
 };

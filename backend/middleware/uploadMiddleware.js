@@ -25,7 +25,7 @@ export const uploadImages = multer({
 }).array('images', 5);
 
 // Helper to upload a buffer stream to Cloudinary
-export const uploadBufferToCloudinary = (buffer, folder = 'propertyhub/listings') => {
+export const uploadBufferToCloudinary = (buffer, folder = 'estatesquare/listings') => {
   return new Promise((resolve, reject) => {
     if (!isCloudinaryConfigured) {
       return reject(

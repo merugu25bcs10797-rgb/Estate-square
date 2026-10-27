@@ -1,4 +1,4 @@
-# PropertyHub - 4-Minute Product Demo Script
+# EstateSquare - 4-Minute Product Demo Script
 
 This script walks through the complete end-to-end user journey across all three roles (**Seller**, **Admin**, **Buyer**), demonstrating moderation, visit conflict prevention, enquiries, and favorites.
 
@@ -40,7 +40,7 @@ This script walks through the complete end-to-end user journey across all three 
 ### Minute 0:45 – 1:30 | Admin Moderation Workflow
 1. **Sign in as Admin**:
    - Log out. Click **Sign in**.
-   - Use the **Admin** demo quick-fill button (`admin@propertyhub.com` / `AdminPassword123!`).
+   - Enter Admin credentials (`admin@estatesquare.com` or `admin@propertyhub.com` / `AdminPassword123!`).
    - Click **Sign In**.
 2. **Review Pending Queue**:
    - Navigate to **Admin Moderation** (`/admin/moderation`).
@@ -55,7 +55,7 @@ This script walks through the complete end-to-end user journey across all three 
 ### Minute 1:30 – 2:45 | Buyer Search, Favorite, Enquiry & Visit Scheduling
 1. **Sign in as Buyer**:
    - Log out. Click **Sign in**.
-   - Use the **Buyer** demo quick-fill button (`buyer@propertyhub.com` / `Buyer123!`).
+   - Enter Buyer credentials (`buyer@estatesquare.com` or `buyer@propertyhub.com` / `Buyer123!`).
    - Click **Sign In**.
 2. **Search & Discovery**:
    - Navigate to **Explore All** (`/search`).

@@ -7,8 +7,8 @@ export const protect = async (req, res, next) => {
     let token = null;
 
     // 1. Check HttpOnly cookie
-    if (req.cookies && req.cookies[COOKIE_NAME]) {
-      token = req.cookies[COOKIE_NAME];
+    if (req.cookies && (req.cookies[COOKIE_NAME] || req.cookies['propertyhub_token'])) {
+      token = req.cookies[COOKIE_NAME] || req.cookies['propertyhub_token'];
     }
     // 2. Fallback to Bearer token header if present
     else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
@@ -42,8 +42,8 @@ export const protect = async (req, res, next) => {
 export const optionalProtect = async (req, res, next) => {
   try {
     let token = null;
-    if (req.cookies && req.cookies[COOKIE_NAME]) {
-      token = req.cookies[COOKIE_NAME];
+    if (req.cookies && (req.cookies[COOKIE_NAME] || req.cookies['propertyhub_token'])) {
+      token = req.cookies[COOKIE_NAME] || req.cookies['propertyhub_token'];
     } else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
       token = req.headers.authorization.split(' ')[1];
     }

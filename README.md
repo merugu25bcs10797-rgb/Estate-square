@@ -19,7 +19,7 @@
 | **Frontend Application** | Vercel | [https://property-hub-gamma.vercel.app](https://property-hub-gamma.vercel.app) | 🟢 Live |
 | **Backend API Service** | Render | [https://property-hub-apd2.onrender.com](https://property-hub-apd2.onrender.com) | 🟢 Live |
 | **System Health Check** | Render | [https://property-hub-apd2.onrender.com/health](https://property-hub-apd2.onrender.com/health) | 🟢 Active |
-| **Source Code Repository** | GitHub | [https://github.com/merugu25bcs10797-rgb/property-hub](https://github.com/merugu25bcs10797-rgb/property-hub) | 🟢 Public |
+| **Source Code Repository** | GitHub | [https://github.com/merugu25bcs10797-rgb/Estate-square](https://github.com/merugu25bcs10797-rgb/Estate-square) | 🟢 Public |
 
 ---
 
@@ -29,9 +29,9 @@ EstateSquare implements strict role-based separation of concerns:
 
 | Role | Email | Password | Primary Capabilities & Boundaries |
 |---|---|---|---|
-| **Administrator** | `admin@propertyhub.com` | `AdminPassword123!` | **Moderation Only**.<br>• Approves/rejects pending listings with mandatory feedback.<br>• 🚫 **CANNOT BUY**: Cannot schedule visits, submit enquiries, or favorite listings.<br>• 🚫 **CANNOT SELL**: Cannot create or post property listings. |
-| **Verified Seller** | `seller@propertyhub.com` | `Seller123!` | **Selling Only**.<br>• Creates and updates property listings (resets to `pending`).<br>• Confirms/rejects site visit requests.<br>• 🚫 Cannot book visits or enquire on listings. |
-| **Home Buyer** | `buyer@propertyhub.com` | `Buyer123!` | **Buying Only**.<br>• Searches verified approved listings.<br>• Schedules conflict-free 1-hour site visits.<br>• Submits direct owner enquiries and manages saved favorites. |
+| **Administrator** | `admin@estatesquare.com`<br>*(or `admin@propertyhub.com`)* | `AdminPassword123!` | **Moderation Only**.<br>• Approves/rejects pending listings with mandatory feedback.<br>• 🚫 **CANNOT BUY**: Cannot schedule visits, submit enquiries, or favorite listings.<br>• 🚫 **CANNOT SELL**: Cannot create or post property listings. |
+| **Verified Seller** | `seller@estatesquare.com`<br>*(or `seller@propertyhub.com`)* | `Seller123!` | **Selling Only**.<br>• Creates and updates property listings (resets to `pending`).<br>• Confirms/rejects site visit requests.<br>• 🚫 Cannot book visits or enquire on listings. |
+| **Home Buyer** | `buyer@estatesquare.com`<br>*(or `buyer@propertyhub.com`)* | `Buyer123!` | **Buying Only**.<br>• Searches verified approved listings.<br>• Schedules conflict-free 1-hour site visits.<br>• Submits direct owner enquiries and manages saved favorites. |
 
 *Note: New `buyer` or `seller` accounts can also be created via the [Register Page](https://property-hub-gamma.vercel.app/register).*
 
@@ -217,8 +217,8 @@ npm --prefix backend run test
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/merugu25bcs10797-rgb/property-hub.git
-cd property-hub
+git clone https://github.com/merugu25bcs10797-rgb/Estate-square.git
+cd Estate-square
 
 # Install backend dependencies
 cd backend && npm install
@@ -237,7 +237,7 @@ dbURL=memory
 JWT_SECRET=your_super_secret_jwt_key_at_least_32_characters
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
-ADMIN_EMAIL=admin@propertyhub.com
+ADMIN_EMAIL=admin@estatesquare.com
 ADMIN_PASSWORD=AdminPassword123!
 ```
 
