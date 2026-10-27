@@ -8,13 +8,11 @@ const port = process.env.PORT || 8084;
 const startServer = async () => {
   try {
     await connectDB();
-    // Auto-seed in dev mode or memory mode so users and properties are immediately ready
-    if (!env.isProd || env.dbURL === 'memory') {
-      try {
-        await seedDatabase();
-      } catch (seedErr) {
-        console.warn('[Seed Warning] Auto-seed failed:', seedErr.message);
-      }
+    // Auto-seed ensures Admin user and default properties are provisioned in all environments
+    try {
+      await seedDatabase();
+    } catch (seedErr) {
+      console.warn('[Seed Warning] Auto-seed failed:', seedErr.message);
     }
     const server = app.listen(port, '0.0.0.0', () => {
       console.log(`[PropertyHub Server] Running on http://0.0.0.0:${port} in ${env.NODE_ENV} mode`);

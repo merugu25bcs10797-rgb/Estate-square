@@ -45,5 +45,5 @@ export const env = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'admin@propertyhub.com',
-  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'Admin@123456'
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'AdminPassword123!'
 };

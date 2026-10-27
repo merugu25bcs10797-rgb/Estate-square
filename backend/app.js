@@ -37,15 +37,19 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   'http://localhost:8084',
   'http://127.0.0.1:8084',
+  'https://property-hub-gamma.vercel.app',
   env.CLIENT_URL
-].filter(Boolean);
+]
+  .filter(Boolean)
+  .map((origin) => origin.replace(/\/$/, ''));
 
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      const cleanOrigin = origin.replace(/\/$/, '');
+      if (allowedOrigins.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app')) {
         return callback(null, true);
       }
       return callback(new Error(`CORS blocked for origin: ${origin}`));

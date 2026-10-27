@@ -242,7 +242,10 @@ export const seedDatabase = async () => {
       });
       console.log(`[Seed] Created Admin user: ${adminEmail}`);
     } else {
-      console.log(`[Seed] Admin user already exists: ${adminEmail}`);
+      admin.passwordHash = await User.hashPassword(env.ADMIN_PASSWORD);
+      admin.role = 'admin';
+      await admin.save();
+      console.log(`[Seed] Synchronized Admin password for: ${adminEmail}`);
     }
 
     // Ensure sample seller exists
@@ -258,6 +261,9 @@ export const seedDatabase = async () => {
         phone: '+91 9845012345'
       });
       console.log(`[Seed] Created Sample Seller: ${sellerEmail}`);
+    } else {
+      seller.passwordHash = await User.hashPassword('Seller123!');
+      await seller.save();
     }
 
     // Ensure sample buyer exists
@@ -273,6 +279,9 @@ export const seedDatabase = async () => {
         phone: '+91 9820054321'
       });
       console.log(`[Seed] Created Sample Buyer: ${buyerEmail}`);
+    } else {
+      buyer.passwordHash = await User.hashPassword('Buyer123!');
+      await buyer.save();
     }
 
     // Seed Properties if not already present
