@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { env } from './config/env.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 import healthRoutes from './routes/healthRoutes.js';
@@ -11,6 +14,10 @@ import adminRoutes from './routes/adminRoutes.js';
 import favoriteRoutes from './routes/favoriteRoutes.js';
 import enquiryRoutes from './routes/enquiryRoutes.js';
 import visitRoutes from './routes/visitRoutes.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
 
 const app = express();
 
@@ -28,6 +35,8 @@ app.use(
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
+  'http://localhost:8084',
+  'http://127.0.0.1:8084',
   env.CLIENT_URL
 ].filter(Boolean);
 
@@ -81,6 +90,19 @@ app.get('/api', (req, res) => {
     message: 'PropertyHub API v1.0.0'
   });
 });
+
+// Serve compiled frontend in production if dist directory exists
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+
+  app.get('*', (req, res, next) => {
+    // Pass API requests, /health, or static assets that were not found to the error handler
+    if (req.originalUrl.startsWith('/api') || req.originalUrl === '/health') {
+      return next();
+    }
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+}
 
 // 404 & Central Error Handlers
 app.use(notFoundHandler);

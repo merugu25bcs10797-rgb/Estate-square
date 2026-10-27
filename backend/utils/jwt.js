@@ -3,13 +3,16 @@ import { env } from '../config/env.js';
 
 export const COOKIE_NAME = 'propertyhub_token';
 
-export const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: env.isProd,
-  sameSite: env.isProd ? 'none' : 'lax',
-  path: '/',
-  maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
-});
+export const getCookieOptions = () => {
+  const isSecure = env.isProd && process.env.COOKIE_SECURE !== 'false';
+  return {
+    httpOnly: true,
+    secure: isSecure,
+    sameSite: isSecure ? 'none' : 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
+  };
+};
 
 export const signToken = (payload) => {
   return jwt.sign(payload, env.JWT_SECRET, {

@@ -11,19 +11,8 @@ dotenv.config(); // fallback to cwd
 
 const isProd = process.env.NODE_ENV === 'production';
 
-// Strict validation for production, and core validation for dev
-const requiredEnvVars = isProd
-  ? [
-      'dbURL',
-      'JWT_SECRET',
-      'CLIENT_URL',
-      'CLOUDINARY_CLOUD_NAME',
-      'CLOUDINARY_API_KEY',
-      'CLOUDINARY_API_SECRET',
-      'ADMIN_EMAIL',
-      'ADMIN_PASSWORD'
-    ]
-  : ['JWT_SECRET'];
+// Core required variables for production and dev
+const requiredEnvVars = isProd ? ['dbURL', 'JWT_SECRET'] : ['JWT_SECRET'];
 
 const missingVars = requiredEnvVars.filter((varName) => !process.env[varName]);
 
@@ -33,9 +22,16 @@ if (missingVars.length > 0) {
       ', '
     )}. Please set them in your environment or .env file.`
   );
-  if (isProd || process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== 'test') {
     process.exit(1);
   }
+}
+
+// Check Cloudinary in production
+if (isProd && (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET)) {
+  console.warn(
+    '[Cloudinary Notice] Cloudinary credentials are not fully configured. Image uploads will be disabled until CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are provided.'
+  );
 }
 
 export const env = {

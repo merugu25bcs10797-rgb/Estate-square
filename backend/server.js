@@ -8,8 +8,8 @@ const port = process.env.PORT || 8084;
 const startServer = async () => {
   try {
     await connectDB();
-    // Auto-seed in dev mode so users and properties are immediately ready
-    if (!env.isProd) {
+    // Auto-seed in dev mode or memory mode so users and properties are immediately ready
+    if (!env.isProd || env.dbURL === 'memory') {
       try {
         await seedDatabase();
       } catch (seedErr) {
