@@ -23,17 +23,28 @@
 
 ---
 
-## 🔐 Strict Role Boundaries (RBAC) & Evaluation Credentials
+## 🔐 Strict Role Boundaries (RBAC) & Authentication
 
-EstateSquare implements strict role-based separation of concerns:
+EstateSquare enforces a strict 3-tier Role-Based Access Control (RBAC) architecture with segregated capabilities and mutual exclusion:
 
-| Role | Email | Password | Primary Capabilities & Boundaries |
-|---|---|---|---|
-| **Administrator** | `admin@estatesquare.com`<br>*(or `admin@propertyhub.com`)* | `AdminPassword123!` | **Moderation Only**.<br>• Approves/rejects pending listings with mandatory feedback.<br>• 🚫 **CANNOT BUY**: Cannot schedule visits, submit enquiries, or favorite listings.<br>• 🚫 **CANNOT SELL**: Cannot create or post property listings. |
-| **Verified Seller** | `seller@estatesquare.com`<br>*(or `seller@propertyhub.com`)* | `Seller123!` | **Selling Only**.<br>• Creates and updates property listings (resets to `pending`).<br>• Confirms/rejects site visit requests.<br>• 🚫 Cannot book visits or enquire on listings. |
-| **Home Buyer** | `buyer@estatesquare.com`<br>*(or `buyer@propertyhub.com`)* | `Buyer123!` | **Buying Only**.<br>• Searches verified approved listings.<br>• Schedules conflict-free 1-hour site visits.<br>• Submits direct owner enquiries and manages saved favorites. |
+### 1. Role Capabilities & Operational Boundaries
 
-*Note: New `buyer` or `seller` accounts can also be created via the [Register Page](https://estate-square-app-gamma.vercel.app/register).*
+| Role | Access Type | Primary Capabilities & System Boundaries |
+|---|---|---|
+| **Administrator** | Pre-Provisioned System Account | **Moderation Only**.<br>• Inspects pending listings, approves verified properties, or rejects with mandatory structured feedback.<br>• 🚫 **CANNOT BUY**: Strictly prevented from scheduling visits, submitting enquiries, or saving favorites.<br>• 🚫 **CANNOT SELL**: Strictly prevented from posting or updating property listings. |
+| **Verified Seller** | Core Registration Flow | **Selling Only**.<br>• Creates listings (default to `pending`), uploads property media, and edits listing attributes.<br>• Reviews incoming visit requests and buyer enquiries; confirms/rejects visit slots.<br>• 🚫 Cannot book visits or submit enquiries on listings. |
+| **Home Buyer** | Core Registration Flow | **Buying Only**.<br>• Searches and filters verified `approved` listings by city, budget, and configuration.<br>• Schedules conflict-free 1-hour site visits, sends direct enquiries to sellers, and manages saved favorites.<br>• 🚫 Cannot create or post property listings. |
+
+### 2. Core User Registration Flow
+
+All **Buyers** and **Sellers** register directly on the platform via the live [Registration Portal](https://estate-square-app-gamma.vercel.app/register):
+
+* **Role Selection at Signup**: Users explicitly select their role (**Property Owner (Seller)** or **Home Buyer**) during registration.
+* **Immediate Role Routing**: Upon account creation, users are authenticated via secure HttpOnly session cookies and immediately redirected to their specialized dashboard (`/dashboard/seller` or `/dashboard/buyer`).
+* **Admin Pre-Provisioning**: Because the Administrator role has privileged moderation authority, admin accounts cannot be self-registered publicly. Pre-provisioned credentials for verification and evaluation:
+  - **Email**: `admin@estatesquare.com` *(or `admin@propertyhub.com`)*
+  - **Password**: `AdminPassword123!`
+  - **Portal**: [Sign In Page](https://estate-square-app-gamma.vercel.app/login) → Automatic redirect to `/admin/moderation`
 
 ---
 

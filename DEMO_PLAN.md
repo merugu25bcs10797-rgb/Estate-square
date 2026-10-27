@@ -53,10 +53,14 @@ This script walks through the complete end-to-end user journey across all three 
 ---
 
 ### Minute 1:30 – 2:45 | Buyer Search, Favorite, Enquiry & Visit Scheduling
-1. **Sign in as Buyer**:
-   - Log out. Click **Sign in**.
-   - Enter Buyer credentials (`buyer@estatesquare.com` or `buyer@propertyhub.com` / `Buyer123!`).
-   - Click **Sign In**.
+1. **Onboard as Buyer (Core Flow)**:
+   - Log out. Click **Get Started** or **Register**.
+   - Select **Home Buyer** role.
+   - Register as:
+     - Name: `Priya Patel`
+     - Email: `priya.buyer@example.com`
+     - Password: `Password123!`
+   - Show automatic redirect to verified public exploration (`/search`).
 2. **Search & Discovery**:
    - Navigate to **Explore All** (`/search`).
    - Show that `Grand 3 BHK Sky Villa in Indiranagar` is now publicly visible with verified badges!
