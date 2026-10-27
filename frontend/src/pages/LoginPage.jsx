@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
-import { Home, Lock, Mail, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react';
+import { Home, ArrowRight } from 'lucide-react';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -43,11 +43,6 @@ export const LoginPage = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleQuickLogin = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
   };
 
   return (
@@ -106,39 +101,6 @@ export const LoginPage = () => {
               <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
           </form>
-
-          {/* Quick Demo Login Credentials Bar */}
-          <div className="mt-6 pt-5 border-t border-warm-200">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-charcoal-muted text-center mb-2.5">
-              Quick Demo Fill
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin@propertyhub.com', 'AdminPassword123!')}
-                className="py-1.5 px-2 text-[11px] font-medium bg-amber-50 text-amber-900 border border-amber-200 rounded hover:bg-amber-100 transition-colors flex items-center justify-center space-x-1"
-              >
-                <ShieldCheck className="w-3 h-3" />
-                <span>Admin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('seller@propertyhub.com', 'Seller123!')}
-                className="py-1.5 px-2 text-[11px] font-medium bg-emerald-50 text-forest border border-emerald-200 rounded hover:bg-emerald-100 transition-colors flex items-center justify-center space-x-1"
-              >
-                <UserCheck className="w-3 h-3" />
-                <span>Seller</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('buyer@propertyhub.com', 'Buyer123!')}
-                className="py-1.5 px-2 text-[11px] font-medium bg-blue-50 text-blue-800 border border-blue-200 rounded hover:bg-blue-100 transition-colors flex items-center justify-center space-x-1"
-              >
-                <UserCheck className="w-3 h-3" />
-                <span>Buyer</span>
-              </button>
-            </div>
-          </div>
 
           <div className="mt-6 text-center text-xs text-charcoal-muted">
             Don't have an account?{' '}
