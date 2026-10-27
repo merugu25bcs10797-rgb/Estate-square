@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
-import { Home, ArrowRight, Building, ShoppingBag } from 'lucide-react';
+import { Home, ArrowRight, Building, ShoppingBag, Loader2 } from 'lucide-react';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -15,9 +15,18 @@ export const RegisterPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const { register } = useAuth();
+  const { register, user, isLoading } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
+
+  // If already authenticated, redirect away immediately
+  useEffect(() => {
+    if (!isLoading && user) {
+      if (user.role === 'admin') navigate('/admin/moderation', { replace: true });
+      else if (user.role === 'seller') navigate('/dashboard/seller', { replace: true });
+      else navigate('/dashboard/buyer', { replace: true });
+    }
+  }, [user, isLoading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,9 +50,9 @@ export const RegisterPage = () => {
       toast.success(`Welcome to PropertyHub, ${res.data.user.name}!`);
 
       if (role === 'seller') {
-        navigate('/dashboard/seller');
+        navigate('/dashboard/seller', { replace: true });
       } else {
-        navigate('/dashboard/buyer');
+        navigate('/dashboard/buyer', { replace: true });
       }
     } catch (err) {
       const msg = err.response?.data?.message || 'Registration failed. Please check your details.';
@@ -53,6 +62,14 @@ export const RegisterPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading || user) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-forest" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">

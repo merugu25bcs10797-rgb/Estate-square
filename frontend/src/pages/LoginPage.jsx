@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import Input from '../components/Input.jsx';
 import Button from '../components/Button.jsx';
-import { Home, ArrowRight } from 'lucide-react';
+import { Home, ArrowRight, Loader2 } from 'lucide-react';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -12,12 +12,25 @@ export const LoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const { login } = useAuth();
+  const { login, user, isLoading } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
+
+  // Automatically redirect away from login if already authenticated
+  useEffect(() => {
+    if (!isLoading && user) {
+      if (from && from !== '/' && from !== '/login') {
+        navigate(from, { replace: true });
+      } else {
+        if (user.role === 'admin') navigate('/admin/moderation', { replace: true });
+        else if (user.role === 'seller') navigate('/dashboard/seller', { replace: true });
+        else navigate('/dashboard/buyer', { replace: true });
+      }
+    }
+  }, [user, isLoading, navigate, from]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,13 +41,14 @@ export const LoginPage = () => {
       const res = await login({ email, password });
       toast.success(`Welcome back, ${res.data.user.name}!`);
       
-      // Navigate to destination or role-based default
-      if (from !== '/') {
+      // Navigate to destination or role-based default with replace: true
+      // This prevents the login page from lingering in the browser history
+      if (from && from !== '/' && from !== '/login') {
         navigate(from, { replace: true });
       } else {
-        if (res.data.user.role === 'admin') navigate('/admin/moderation');
-        else if (res.data.user.role === 'seller') navigate('/dashboard/seller');
-        else navigate('/dashboard/buyer');
+        if (res.data.user.role === 'admin') navigate('/admin/moderation', { replace: true });
+        else if (res.data.user.role === 'seller') navigate('/dashboard/seller', { replace: true });
+        else navigate('/dashboard/buyer', { replace: true });
       }
     } catch (err) {
       const msg = err.response?.data?.message || 'Login failed. Please check your credentials.';
@@ -44,6 +58,15 @@ export const LoginPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  // If already logged in or checking session, show smooth loading state
+  if (isLoading || user) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-forest" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
