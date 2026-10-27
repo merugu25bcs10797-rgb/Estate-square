@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage.jsx';
 import SearchPage from './pages/SearchPage.jsx';
 import PropertyDetailsPage from './pages/PropertyDetailsPage.jsx';
 import AddEditPropertyPage from './pages/AddEditPropertyPage.jsx';
+import SellerDashboardPage from './pages/SellerDashboardPage.jsx';
+import BuyerDashboardPage from './pages/BuyerDashboardPage.jsx';
 import AdminModerationPage from './pages/AdminModerationPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
@@ -25,7 +27,25 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
+        {/* Buyer Protected Routes */}
+        <Route
+          path="/dashboard/buyer"
+          element={
+            <ProtectedRoute allowedRoles={['buyer']}>
+              <BuyerDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Seller Protected Routes */}
+        <Route
+          path="/dashboard/seller"
+          element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <SellerDashboardPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/property/new"
           element={

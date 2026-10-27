@@ -8,6 +8,9 @@ import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import favoriteRoutes from './routes/favoriteRoutes.js';
+import enquiryRoutes from './routes/enquiryRoutes.js';
+import visitRoutes from './routes/visitRoutes.js';
 
 const app = express();
 
@@ -61,6 +64,15 @@ app.use('/api/properties', propertyRoutes);
 
 // Admin routes
 app.use('/api/admin', adminRoutes);
+
+// Favorite routes
+app.use('/api/favorites', favoriteRoutes);
+
+// Enquiry routes
+app.use('/api/enquiries', enquiryRoutes);
+
+// Visit routes
+app.use('/api/visits', visitRoutes);
 
 // Placeholder for remaining routes (will be mounted in upcoming stages)
 app.get('/api', (req, res) => {

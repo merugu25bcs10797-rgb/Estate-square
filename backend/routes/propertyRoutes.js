@@ -7,6 +7,9 @@ import {
   updateProperty,
   deleteProperty
 } from '../controllers/propertyController.js';
+import { toggleFavorite } from '../controllers/favoriteController.js';
+import { createEnquiry } from '../controllers/enquiryController.js';
+import { createVisit } from '../controllers/visitController.js';
 import { protect, optionalProtect } from '../middleware/authMiddleware.js';
 import { restrictTo } from '../middleware/roleMiddleware.js';
 import { validate, validateObjectId } from '../middleware/validateMiddleware.js';
@@ -14,7 +17,9 @@ import { uploadImages } from '../middleware/uploadMiddleware.js';
 import {
   propertyCreateSchema,
   propertyUpdateSchema,
-  propertySearchSchema
+  propertySearchSchema,
+  enquiryCreateSchema,
+  visitCreateSchema
 } from '../utils/zodSchemas.js';
 
 const router = Router();
@@ -56,6 +61,27 @@ router.delete(
   restrictTo('seller', 'admin'),
   validateObjectId('id'),
   deleteProperty
+);
+
+// Favorite toggle on property
+router.post('/:id/favorite', protect, validateObjectId('id'), toggleFavorite);
+
+// Submit enquiry on property
+router.post(
+  '/:id/enquiries',
+  protect,
+  validateObjectId('id'),
+  validate(enquiryCreateSchema),
+  createEnquiry
+);
+
+// Submit visit request on property
+router.post(
+  '/:id/visits',
+  protect,
+  validateObjectId('id'),
+  validate(visitCreateSchema),
+  createVisit
 );
 
 export default router;
