@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { connectDB, disconnectDB } from '../config/db.js';
 import { env } from '../config/env.js';
 import User from '../models/User.js';
@@ -219,8 +220,12 @@ export const samplePropertiesData = [
 
 export const seedDatabase = async () => {
   try {
-    console.log('[Seed] Connecting to database...');
-    await connectDB();
+    if (mongoose.connection.readyState !== 1) {
+      console.log('[Seed] Connecting to database...');
+      await connectDB();
+    } else {
+      console.log('[Seed] Using existing database connection...');
+    }
 
     console.log('[Seed] Ensuring Admin user exists...');
     const adminEmail = env.ADMIN_EMAIL.toLowerCase();
