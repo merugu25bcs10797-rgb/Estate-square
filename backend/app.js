@@ -91,7 +91,7 @@ app.use('/api/visits', visitRoutes);
 app.get('/api', (req, res) => {
   res.json({
     success: true,
-    message: 'PropertyHub API v1.0.0'
+    message: 'EstateSquare API v1.0.0'
   });
 });
 

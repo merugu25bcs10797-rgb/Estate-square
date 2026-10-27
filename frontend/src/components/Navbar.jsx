@@ -29,7 +29,7 @@ export const Navbar = ({ user, logout }) => {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-charcoal tracking-tight leading-none">
-                  Property<span className="text-forest">Hub</span>
+                  Estate<span className="text-forest">Square</span>
                 </span>
                 <span className="text-[10px] text-charcoal-muted uppercase tracking-widest mt-0.5 font-medium">
                   Verified India

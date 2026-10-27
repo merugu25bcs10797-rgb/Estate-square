@@ -77,7 +77,7 @@ export const LoginPage = () => {
           </div>
         </div>
         <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-charcoal">
-          Sign in to PropertyHub
+          Sign in to EstateSquare
         </h2>
         <p className="mt-1 text-center text-xs text-charcoal-muted">
           Access your verified properties, visit schedules, and enquiries

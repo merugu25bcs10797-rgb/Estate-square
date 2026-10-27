@@ -1,7 +1,7 @@
 {
-  "name": "propertyhub-backend",
+  "name": "estatesquare-backend",
   "version": "1.0.0",
-  "description": "Backend API for PropertyHub real estate marketplace",
+  "description": "Backend API for EstateSquare real estate marketplace",
   "type": "module",
   "main": "server.js",
   "scripts": {

@@ -63,22 +63,30 @@ router.delete(
   deleteProperty
 );
 
-// Favorite toggle on property
-router.post('/:id/favorite', protect, validateObjectId('id'), toggleFavorite);
+// Favorite toggle on property (Buyer only)
+router.post(
+  '/:id/favorite',
+  protect,
+  restrictTo('buyer'),
+  validateObjectId('id'),
+  toggleFavorite
+);
 
-// Submit enquiry on property
+// Submit enquiry on property (Buyer only)
 router.post(
   '/:id/enquiries',
   protect,
+  restrictTo('buyer'),
   validateObjectId('id'),
   validate(enquiryCreateSchema),
   createEnquiry
 );
 
-// Submit visit request on property
+// Submit visit request on property (Buyer only)
 router.post(
   '/:id/visits',
   protect,
+  restrictTo('buyer'),
   validateObjectId('id'),
   validate(visitCreateSchema),
   createVisit

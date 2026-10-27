@@ -14,7 +14,7 @@ export const Footer = () => {
                 <Home className="w-4 h-4" />
               </div>
               <span className="font-bold text-lg text-charcoal tracking-tight">
-                Property<span className="text-forest">Hub</span>
+                Estate<span className="text-forest">Square</span>
               </span>
             </div>
             <p className="text-xs text-charcoal-muted leading-relaxed">
@@ -86,7 +86,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-forest flex-shrink-0" />
-                <span>support@propertyhub.in</span>
+                <span>support@estatesquare.in</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-forest flex-shrink-0" />
@@ -97,7 +97,7 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 mt-8 border-t border-warm-200 flex flex-col sm:flex-row justify-between items-center text-xs text-charcoal-muted">
-          <p>© {new Date().getFullYear()} PropertyHub India. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} EstateSquare India. All rights reserved.</p>
           <p className="mt-2 sm:mt-0">Built for clean, verified, and reliable real estate workflows.</p>
         </div>
       </div>

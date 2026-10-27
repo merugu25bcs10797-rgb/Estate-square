@@ -47,7 +47,7 @@ export const RegisterPage = () => {
         phone,
         role
       });
-      toast.success(`Welcome to PropertyHub, ${res.data.user.name}!`);
+      toast.success(`Welcome to EstateSquare, ${res.data.user.name}!`);
 
       if (role === 'seller') {
         navigate('/dashboard/seller', { replace: true });

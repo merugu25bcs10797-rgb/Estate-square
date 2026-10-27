@@ -15,14 +15,14 @@ const startServer = async () => {
       console.warn('[Seed Warning] Auto-seed failed:', seedErr.message);
     }
     const server = app.listen(port, '0.0.0.0', () => {
-      console.log(`[PropertyHub Server] Running on http://0.0.0.0:${port} in ${env.NODE_ENV} mode`);
+      console.log(`[EstateSquare Server] Running on http://0.0.0.0:${port} in ${env.NODE_ENV} mode`);
     });
 
     // Graceful shutdown handling
     const shutdown = async (signal) => {
-      console.log(`[PropertyHub Server] Received ${signal}. Shutting down gracefully...`);
+      console.log(`[EstateSquare Server] Received ${signal}. Shutting down gracefully...`);
       server.close(() => {
-        console.log('[PropertyHub Server] HTTP server closed.');
+        console.log('[EstateSquare Server] HTTP server closed.');
         process.exit(0);
       });
     };
@@ -30,7 +30,7 @@ const startServer = async () => {
     process.on('SIGTERM', () => shutdown('SIGTERM'));
     process.on('SIGINT', () => shutdown('SIGINT'));
   } catch (error) {
-    console.error(`[PropertyHub Server Error] Failed to start server: ${error.message}`);
+    console.error(`[EstateSquare Server Error] Failed to start server: ${error.message}`);
     process.exit(1);
   }
 };

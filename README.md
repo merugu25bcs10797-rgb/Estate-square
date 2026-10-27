@@ -1,4 +1,4 @@
-# PropertyHub — Curated Real Estate Marketplace
+# EstateSquare — Curated Real Estate Marketplace
 
 [![React](https://img.shields.io/badge/React-18.3-blue.svg?logo=react&logoColor=white)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-ESM-339933.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -23,17 +23,17 @@
 
 ---
 
-## 🔐 Evaluation & Demo Credentials
+## 🔐 Strict Role Boundaries (RBAC) & Evaluation Credentials
 
-To evaluate role-based dashboards, moderation, and visit scheduling:
+EstateSquare implements strict role-based separation of concerns:
 
-| Role | Email | Password | Primary Capabilities |
+| Role | Email | Password | Primary Capabilities & Boundaries |
 |---|---|---|---|
-| **Administrator** | `admin@propertyhub.com` | `AdminPassword123!` | Moderate pending listings, approve/reject with feedback notes |
-| **Verified Seller** | `seller@propertyhub.com` | `Seller123!` | Create listings, manage visit requests, review buyer enquiries |
-| **Home Buyer** | `buyer@propertyhub.com` | `Buyer123!` | Browse approved listings, schedule visits, send enquiries, save favorites |
+| **Administrator** | `admin@propertyhub.com` | `AdminPassword123!` | **Moderation Only**.<br>• Approves/rejects pending listings with mandatory feedback.<br>• 🚫 **CANNOT BUY**: Cannot schedule visits, submit enquiries, or favorite listings.<br>• 🚫 **CANNOT SELL**: Cannot create or post property listings. |
+| **Verified Seller** | `seller@propertyhub.com` | `Seller123!` | **Selling Only**.<br>• Creates and updates property listings (resets to `pending`).<br>• Confirms/rejects site visit requests.<br>• 🚫 Cannot book visits or enquire on listings. |
+| **Home Buyer** | `buyer@propertyhub.com` | `Buyer123!` | **Buying Only**.<br>• Searches verified approved listings.<br>• Schedules conflict-free 1-hour site visits.<br>• Submits direct owner enquiries and manages saved favorites. |
 
-*Note: New `buyer` or `seller` accounts can also be created freely via the [Register Page](https://property-hub-gamma.vercel.app/register).*
+*Note: New `buyer` or `seller` accounts can also be created via the [Register Page](https://property-hub-gamma.vercel.app/register).*
 
 ---
 
@@ -45,9 +45,10 @@ Online real estate platforms in India frequently suffer from:
 2. **Scheduling Double-Bookings**: Unmoderated visit scheduling leads to overlapping time slots and wasted physical site visits.
 3. **Lack of Accountability**: Owners and buyers communicate without status tracking or moderation records.
 
-### The PropertyHub Solution
+### The EstateSquare Solution
 - **Mandatory Admin Moderation**: Listings submitted by sellers default to `pending` and are invisible to the public until reviewed and approved by an administrator.
 - **Conflict-Free Visit State Machine**: Prevents overlapping bookings by rejecting any visit scheduled within 60 minutes of an existing confirmed slot (`|visitDate - slot| < 60 mins`).
+- **Strict Role Separation**: Administrators maintain impartiality; admins cannot buy properties or post sales listings.
 - **Full Audit Trail**: Rejections require structured feedback reasons; editing key listing fields automatically reverts the property back to `pending`.
 - **Cross-Domain Session Security**: Authentication powered by signed JWTs stored in `HttpOnly; SameSite=None; Secure` cookies with CORS origin enforcement.
 
@@ -119,7 +120,7 @@ stateDiagram-v2
 ### Authentication & Sessions
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `POST` | `/api/auth/register` | Public | Register new `buyer` or `seller` account (rate limited) |
+| `POST` | `/api/auth/register` | Public | Register new `buyer` or `seller` account (admin creation blocked) |
 | `POST` | `/api/auth/login` | Public | Authenticate user, issue `HttpOnly` JWT cookie |
 | `POST` | `/api/auth/logout` | Public | Clear authentication cookie |
 | `GET` | `/api/auth/me` | Authenticated | Retrieve current user profile from session |
@@ -144,7 +145,7 @@ stateDiagram-v2
 ### Visits & Scheduling
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `POST` | `/api/properties/:id/visits` | Buyer | Schedule future visit slot |
+| `POST` | `/api/properties/:id/visits` | Buyer | Schedule future visit slot (Admins & Sellers forbidden) |
 | `GET` | `/api/visits/my` | Buyer | View buyer's scheduled site visits |
 | `GET` | `/api/visits/received` | Seller | View visit requests for seller's properties |
 | `PATCH`| `/api/visits/:id/status` | Buyer / Seller | Execute state transition with 1-hr conflict check |
@@ -152,11 +153,11 @@ stateDiagram-v2
 ### Enquiries & Favorites
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `POST` | `/api/properties/:id/enquiries` | Buyer | Send direct message/enquiry to property owner |
+| `POST` | `/api/properties/:id/enquiries` | Buyer | Send direct message/enquiry to property owner (Admins & Sellers forbidden) |
 | `GET` | `/api/enquiries/my` | Buyer | View sent enquiries |
 | `GET` | `/api/enquiries/received` | Seller | View received enquiries and update status |
-| `POST` | `/api/properties/:id/favorite` | Authenticated | Toggle property favorite (idempotent compound index) |
-| `GET` | `/api/favorites` | Authenticated | Retrieve user's saved favorite properties |
+| `POST` | `/api/properties/:id/favorite` | Buyer | Toggle property favorite (Admins & Sellers forbidden) |
+| `GET` | `/api/favorites` | Buyer | Retrieve user's saved favorite properties |
 
 ### System & Health
 | Method | Endpoint | Access | Description |
@@ -168,7 +169,7 @@ stateDiagram-v2
 
 ## 🧪 Automated Integration Tests
 
-PropertyHub features automated end-to-end integration tests written with **Jest**, **Supertest**, and **mongodb-memory-server**:
+EstateSquare features automated end-to-end integration tests written with **Jest**, **Supertest**, and **mongodb-memory-server**:
 
 ```text
 PASS tests/property.test.js

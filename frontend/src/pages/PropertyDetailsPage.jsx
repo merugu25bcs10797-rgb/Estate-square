@@ -89,6 +89,10 @@ export const PropertyDetailsPage = () => {
       navigate('/login');
       return;
     }
+    if (user.role !== 'buyer') {
+      toast.error('Administrators and Sellers cannot favorite properties.');
+      return;
+    }
     try {
       const res = await api.post(`/api/properties/${id}/favorite`);
       setIsFavorite(res.data.data.isFavorite);
@@ -103,6 +107,10 @@ export const PropertyDetailsPage = () => {
     if (!user) {
       toast.info('Please sign in to send an enquiry.');
       navigate('/login');
+      return;
+    }
+    if (user.role !== 'buyer') {
+      toast.error('Administrators and Sellers cannot submit buyer enquiries.');
       return;
     }
     setIsEnquirySubmitting(true);
@@ -122,6 +130,10 @@ export const PropertyDetailsPage = () => {
     if (!user) {
       toast.info('Please sign in to request a visit.');
       navigate('/login');
+      return;
+    }
+    if (user.role !== 'buyer') {
+      toast.error('Administrators and Sellers cannot schedule property visits.');
       return;
     }
     if (!visitDate || !visitTime) {
@@ -255,13 +267,15 @@ export const PropertyDetailsPage = () => {
               <span className="text-3xl font-extrabold text-charcoal">
                 {formatPrice(property.price, property.listingType)}
               </span>
-              <button
-                onClick={handleToggleFavorite}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md border border-warm-300 text-xs font-semibold text-charcoal hover:bg-warm-100 transition-colors"
-              >
-                <Heart className={`w-4 h-4 ${isFavorite ? 'fill-rose-600 text-rose-600' : 'text-charcoal-muted'}`} />
-                <span>{isFavorite ? 'Saved to Favorites' : 'Save Property'}</span>
-              </button>
+              {(!user || user.role === 'buyer') && (
+                <button
+                  onClick={handleToggleFavorite}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md border border-warm-300 text-xs font-semibold text-charcoal hover:bg-warm-100 transition-colors"
+                >
+                  <Heart className={`w-4 h-4 ${isFavorite ? 'fill-rose-600 text-rose-600' : 'text-charcoal-muted'}`} />
+                  <span>{isFavorite ? 'Saved to Favorites' : 'Save Property'}</span>
+                </button>
+              )}
             </div>
             <h1 className="text-xl font-bold text-charcoal mt-2">{property.title}</h1>
             <div className="flex items-center text-xs text-charcoal-muted mt-1.5 space-x-1">
@@ -311,32 +325,65 @@ export const PropertyDetailsPage = () => {
         {/* Right 1 col: Contact & Actions Sidebar */}
         <div className="space-y-6">
           {/* Action Card: Schedule Visit & Enquire */}
-          <div className="bg-white border border-warm-200 rounded-lg p-6 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-charcoal">Interested in this property?</h3>
-            <p className="text-xs text-charcoal-muted leading-relaxed">
-              Book a guaranteed conflict-free physical visit or reach out directly to the owner.
-            </p>
+          {user?.role === 'admin' ? (
+            <div className="bg-amber-50/80 border border-amber-200 rounded-lg p-5 space-y-3">
+              <div className="flex items-center space-x-2 text-amber-900 font-bold text-xs uppercase tracking-wide">
+                <ShieldCheck className="w-4 h-4 text-amber-700" />
+                <span>Admin View Mode</span>
+              </div>
+              <p className="text-xs text-amber-900 leading-relaxed">
+                Administrator accounts have moderation privileges only. Admins <strong>cannot buy, schedule visits, or list properties</strong>.
+              </p>
+              <div className="pt-2 border-t border-amber-200/60">
+                <Link
+                  to="/admin/moderation"
+                  className="inline-flex items-center justify-center w-full py-2 px-3 text-xs font-semibold bg-forest text-white rounded hover:bg-forest/90 transition-colors"
+                >
+                  Go to Moderation Dashboard &rarr;
+                </Link>
+              </div>
+            </div>
+          ) : user?.role === 'seller' ? (
+            <div className="bg-warm-100 border border-warm-200 rounded-lg p-5 space-y-2">
+              <h3 className="text-xs font-bold text-charcoal uppercase tracking-wider">Seller View</h3>
+              <p className="text-xs text-charcoal-muted leading-relaxed">
+                You are viewing this listing as a seller. Sellers cannot book visits or enquire on properties. Manage your listings from the seller dashboard.
+              </p>
+              <Link
+                to="/dashboard/seller"
+                className="inline-flex items-center justify-center w-full py-2 px-3 text-xs font-semibold bg-white border border-warm-300 text-charcoal rounded hover:bg-warm-50 transition-colors mt-1"
+              >
+                Seller Dashboard &rarr;
+              </Link>
+            </div>
+          ) : (
+            <div className="bg-white border border-warm-200 rounded-lg p-6 shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-charcoal">Interested in this property?</h3>
+              <p className="text-xs text-charcoal-muted leading-relaxed">
+                Book a guaranteed conflict-free physical visit or reach out directly to the owner.
+              </p>
 
-            <Button
-              variant="primary"
-              size="md"
-              className="w-full"
-              onClick={() => setVisitModalOpen(true)}
-            >
-              <Calendar className="w-4 h-4 mr-2" />
-              Schedule a Visit
-            </Button>
+              <Button
+                variant="primary"
+                size="md"
+                className="w-full"
+                onClick={() => setVisitModalOpen(true)}
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Schedule a Visit
+              </Button>
 
-            <Button
-              variant="outline"
-              size="md"
-              className="w-full"
-              onClick={() => setEnquiryModalOpen(true)}
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Send Enquiry
-            </Button>
-          </div>
+              <Button
+                variant="outline"
+                size="md"
+                className="w-full"
+                onClick={() => setEnquiryModalOpen(true)}
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Send Enquiry
+              </Button>
+            </div>
+          )}
 
           {/* Owner Info Card */}
           <div className="bg-white border border-warm-200 rounded-lg p-5">
