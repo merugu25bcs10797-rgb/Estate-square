@@ -37,6 +37,7 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   'http://localhost:8084',
   'http://127.0.0.1:8084',
+  'https://estate-square-app-gamma.vercel.app',
   'https://property-hub-gamma.vercel.app',
   'https://estate-square.vercel.app',
   'https://estatesquare.vercel.app',

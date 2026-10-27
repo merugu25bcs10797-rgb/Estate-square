@@ -6,7 +6,7 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas%208.9-47A248.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Tests](https://img.shields.io/badge/Tests-10%20Passed-brightgreen.svg)](https://jestjs.io/)
-[![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black.svg)](https://property-hub-gamma.vercel.app)
+[![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black.svg)](https://estate-square-app-gamma.vercel.app)
 
 > A production-grade MERN marketplace tailored for the Indian real estate market, addressing unverified listings, fake duplicate posts, and open-ended scheduling chaos through **mandatory admin moderation** and a **strict 1-hour conflict-free visit state machine**.
 
@@ -16,7 +16,7 @@
 
 | Component | Platform | Live URL | Status |
 |---|---|---|---|
-| **Frontend Application** | Vercel | [https://property-hub-gamma.vercel.app](https://property-hub-gamma.vercel.app) | 🟢 Live |
+| **Frontend Application** | Vercel | [https://estate-square-app-gamma.vercel.app](https://estate-square-app-gamma.vercel.app) | 🟢 Live |
 | **Backend API Service** | Render | [https://property-hub-apd2.onrender.com](https://property-hub-apd2.onrender.com) | 🟢 Live |
 | **System Health Check** | Render | [https://property-hub-apd2.onrender.com/health](https://property-hub-apd2.onrender.com/health) | 🟢 Active |
 | **Source Code Repository** | GitHub | [https://github.com/merugu25bcs10797-rgb/Estate-square](https://github.com/merugu25bcs10797-rgb/Estate-square) | 🟢 Public |
@@ -33,7 +33,7 @@ EstateSquare implements strict role-based separation of concerns:
 | **Verified Seller** | `seller@estatesquare.com`<br>*(or `seller@propertyhub.com`)* | `Seller123!` | **Selling Only**.<br>• Creates and updates property listings (resets to `pending`).<br>• Confirms/rejects site visit requests.<br>• 🚫 Cannot book visits or enquire on listings. |
 | **Home Buyer** | `buyer@estatesquare.com`<br>*(or `buyer@propertyhub.com`)* | `Buyer123!` | **Buying Only**.<br>• Searches verified approved listings.<br>• Schedules conflict-free 1-hour site visits.<br>• Submits direct owner enquiries and manages saved favorites. |
 
-*Note: New `buyer` or `seller` accounts can also be created via the [Register Page](https://property-hub-gamma.vercel.app/register).*
+*Note: New `buyer` or `seller` accounts can also be created via the [Register Page](https://estate-square-app-gamma.vercel.app/register).*
 
 ---
 
