@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { env } from './config/env.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 import healthRoutes from './routes/healthRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 
@@ -49,6 +50,9 @@ app.use(cookieParser());
 // Base health route directly on root and /api
 app.use(healthRoutes);
 app.use('/api', healthRoutes);
+
+// Authentication routes
+app.use('/api/auth', authRoutes);
 
 // Placeholder for remaining routes (will be mounted in upcoming stages)
 app.get('/api', (req, res) => {
