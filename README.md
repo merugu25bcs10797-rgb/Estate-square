@@ -7,12 +7,13 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Tests](https://img.shields.io/badge/Tests-10%20Passed-brightgreen.svg)](https://jestjs.io/)
 [![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black.svg)](https://estate-square-app-gamma.vercel.app)
+[![Demo Video](https://img.shields.io/badge/Demo%20Video-Google%20Drive-E37400.svg?logo=google-drive&logoColor=white)](https://drive.google.com/drive/folders/1xy9_b3YQmZonNszhR-1rcUpHK4dmIIB-?usp=sharing)
 
 > A production-grade MERN marketplace tailored for the Indian real estate market, addressing unverified listings, fake duplicate posts, and open-ended scheduling chaos through **mandatory admin moderation** and a **strict 1-hour conflict-free visit state machine**.
 
 ---
 
-## 🌐 Live Deployments
+## 🌐 Live Deployments & Demo
 
 | Component | Platform | Live URL | Status |
 |---|---|---|---|
@@ -20,6 +21,21 @@
 | **Backend API Service** | Render | [https://property-hub-apd2.onrender.com](https://property-hub-apd2.onrender.com) | 🟢 Live |
 | **System Health Check** | Render | [https://property-hub-apd2.onrender.com/health](https://property-hub-apd2.onrender.com/health) | 🟢 Active |
 | **Source Code Repository** | GitHub | [https://github.com/merugu25bcs10797-rgb/Estate-square](https://github.com/merugu25bcs10797-rgb/Estate-square) | 🟢 Public |
+| **Product Demo Video** | Google Drive | [Watch Demo Video](https://drive.google.com/drive/folders/1xy9_b3YQmZonNszhR-1rcUpHK4dmIIB-?usp=sharing) | 🎬 Available |
+
+---
+
+## 🎥 Product Walkthrough Demo Video
+
+Watch the complete end-to-end product demonstration covering all core workflows across the three role tiers (**Seller**, **Admin**, and **Buyer**):
+
+👉 **[Watch Demo Video on Google Drive](https://drive.google.com/drive/folders/1xy9_b3YQmZonNszhR-1rcUpHK4dmIIB-?usp=sharing)**
+
+### Covered in the Demo:
+1. **Seller Flow**: User registration, property listing submission with image uploads, and automatic `pending` moderation state.
+2. **Admin Moderation Flow**: Admin portal review queue, instant listing approval/rejection with mandatory audit trail.
+3. **Buyer Flow**: Public exploration with server-side filters, saving favorites, direct seller enquiries, and visit slot booking.
+4. **State Machine & Conflict Prevention**: Seller review of visits with automated 1-hour double-booking conflict rejection.
 
 ---
 

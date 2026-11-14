@@ -1,5 +1,7 @@
 # EstateSquare - 4-Minute Product Demo Script
 
+> 🎬 **Demo Video Recording**: [Watch on Google Drive](https://drive.google.com/drive/folders/1xy9_b3YQmZonNszhR-1rcUpHK4dmIIB-?usp=sharing)
+
 This script walks through the complete end-to-end user journey across all three roles (**Seller**, **Admin**, **Buyer**), demonstrating moderation, visit conflict prevention, enquiries, and favorites.
 
 ---
